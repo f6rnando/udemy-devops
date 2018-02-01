@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+<div th:replace="common/navbar :: common-navbar" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 class="text-center" th:text="#{copy.h1.text}"></h1>
+                <p class="lead" th:text="#{copy.p.lead}"></p>
+            </div>
+        </div>
+    </div>
+</div><!-- /.container -->
+
+<div class="container marketing">
+    <div class="row">
+        <div class="col-md-4">
+            <a href="#">
+                <img class="img-circle" src="http://via.placeholder.com/250x250"
+                     alt="Fernando Pinto" width="140" height="140" />
+            </a>
+            <h2>Fernando Pinto <small class="member-title">Project Lead</small></h2>
+            <div class="collapse-group">
+                <p class="collapse text-justify" th:text="#{copy.project.lead.intro}"></p>
+                <p>
+                    <a class="btn btn-primary btn-collapse" href="#" role="button" th:text="#{copy.viewdetails.button}"></a>
+                </p>
+            </div>
+        </div> <!-- /.col-md-4 -->
+
+        <div class="col-md-4">
+            <a href="#">
+                <img class="img-circle" src="http://via.placeholder.com/250x250"
+                     alt="Fernando Pinto" width="140" height="140" />
+            </a>
+            <h2>Fernando Pinto <small class="member-title">Project Lead</small></h2>
+            <div class="collapse-group">
+                <p class="collapse text-justify" th:text="#{copy.project.lead.intro}"></p>
+                <p>
+                    <a class="btn btn-primary btn-collapse" href="#" role="button" th:text="#{copy.viewdetails.button}"></a>
+                </p>
+            </div>
+        </div> <!-- /.col-md-4 -->
+
+        <div class="col-md-4">
+            <a href="#">
+                <img class="img-circle" src="http://via.placeholder.com/250x250"
+                     alt="Fernando Pinto" width="140" height="140" />
+            </a>
+            <h2>Fernando Pinto <small class="member-title">Project Lead</small></h2>
+            <div class="collapse-group">
+                <p class="collapse text-justify" th:text="#{copy.project.lead.intro}"></p>
+                <p>
+                    <a class="btn btn-primary btn-collapse" href="#" role="button" th:text="#{copy.viewdetails.button}"></a>
+                </p>
+            </div>
+        </div> <!-- /.col-md-4 -->
+    </div> <!-- /.row -->
+</div> <!-- /.container.marketing -->
+
+<div class="container">
+    <hr class="featurette-divider" />
+    <div class="featurette">
+        <img class="featurette-image pull-right" th:src="@{/img/browser-icon-chrome.png}" />
+        <h2 class="featurette-heading">Featurette heading <span class="muted">It'll blow your mind</span></h2>
+        <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+    </div>
+
+    <hr class="featurette-divider" />
+    <div class="featurette">
+        <img class="featurette-image pull-left" th:src="@{/img/browser-icon-firefox.png}" />
+        <h2 class="featurette-heading">Featurette heading <span class="muted">It'll blow your mind</span></h2>
+        <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+    </div>
+
+    <hr class="featurette-divider" />
+    <div class="featurette">
+        <img class="featurette-image pull-right" th:src="@{/img/browser-icon-safari.png}" />
+        <h2 class="featurette-heading">Featurette heading <span class="muted">It'll blow your mind</span></h2>
+        <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+    </div>
+
+    <footer>
+        <p>&copy; 2018 f6rnando - Fernando Pinto &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a> </p>
+    </footer>
+</div>
+
+<div th:replace="common/header :: before-body-script" />
+
+</body>
+</html>
