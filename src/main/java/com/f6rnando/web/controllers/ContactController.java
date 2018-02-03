@@ -5,9 +5,11 @@
 
 package com.f6rnando.web.controllers;
 
+import com.f6rnando.backend.service.EmailService;
 import com.f6rnando.web.domain.frontend.FeedbackPojo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +28,9 @@ public class ContactController {
     // The application logger
     private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
 
+    @Autowired
+    private EmailService emailService;
+
     // Spring maps the model automatically
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String contactGet(ModelMap model) {
@@ -38,7 +43,7 @@ public class ContactController {
     @RequestMapping(value = "/contact", method = RequestMethod.POST)
     public String contactPost(@ModelAttribute(FEEDBACK_MODEL_KEY) FeedbackPojo feedback) {
         logger.debug("Feedback POJO content {}", feedback);
-        // emailService.sendFeedbackEmail(feedback);
+        emailService.sendFeedbackEmail(feedback);
 
         return ContactController.CONTACT_US_VIEW_NAME;
     }
