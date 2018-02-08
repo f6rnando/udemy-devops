@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Table(name = "user_role")
 public class UserRole implements Serializable {
 
+    /*      FIELDS     */
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -24,7 +26,15 @@ public class UserRole implements Serializable {
     @JoinColumn(name = "role_id")
     private Role role;
 
+
+    /*      METHODS     */
+
     public UserRole() {
+    }
+
+    public UserRole(User user, Role role) {
+        this.user = user;
+        this.role = role;
     }
 
     public User getUser() {

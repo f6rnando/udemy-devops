@@ -1,5 +1,7 @@
 package com.f6rnando.backend.persistence.domain.backend;
 
+import com.f6rnando.enums.RolesEnum;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,6 +15,8 @@ import java.util.Set;
 @Entity
 public class Role implements Serializable {
 
+    /*      FIELDS      */
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -23,7 +27,19 @@ public class Role implements Serializable {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 
+
+    /*      METHODS     */
+
     public Role() {
+    }
+
+    /**
+     * Full constructor
+     * @param rolesEnum
+     */
+    public Role(RolesEnum rolesEnum) {
+        this.id = rolesEnum.getId();
+        this.name = rolesEnum.getRoleName();
     }
 
     public int getId() {

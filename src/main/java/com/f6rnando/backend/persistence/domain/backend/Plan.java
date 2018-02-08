@@ -1,5 +1,7 @@
 package com.f6rnando.backend.persistence.domain.backend;
 
+import com.f6rnando.enums.PlansEnum;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -12,6 +14,7 @@ import java.io.Serializable;
 @Entity
 public class Plan implements Serializable {
 
+    /*      FIELDS      */
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -19,14 +22,20 @@ public class Plan implements Serializable {
 
     private String name;
 
+    /*      METHODS     */
+
     public Plan() {
 
     }
 
     public Plan(int id, String name) {
-
         this.id = id;
         this.name = name;
+    }
+
+    public Plan(PlansEnum plansEnum) {
+        this.id = plansEnum.getId();
+        this.name = plansEnum.getPlanName();
     }
 
     public int getId() {

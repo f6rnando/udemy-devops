@@ -8,6 +8,9 @@ import com.f6rnando.backend.persistence.domain.backend.UserRole;
 import com.f6rnando.backend.persistence.repositories.PlanRepository;
 import com.f6rnando.backend.persistence.repositories.RoleRepository;
 import com.f6rnando.backend.persistence.repositories.UserRepository;
+import com.f6rnando.enums.PlansEnum;
+import com.f6rnando.enums.RolesEnum;
+import com.f6rnando.utils.UsersUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,10 +40,6 @@ public class RepositoryIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
-    private static final int BASIC_PLAN_ID = 1;
-
-    private static final int BASIC_ROLE_ID = 1;
-
     @Before
     public void init() {
         Assert.assertNotNull(planRepository);
@@ -50,33 +49,31 @@ public class RepositoryIntegrationTest {
 
     @Test
     public void testCreateNewPlan() throws Exception {
-        Plan basicPlan = createBasicPlan();
+        Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
-        Plan retrievedPlan = planRepository.findOne(BASIC_PLAN_ID);
+        Plan retrievedPlan = planRepository.findOne(PlansEnum.BASIC.getId());
         Assert.assertNotNull(retrievedPlan);
     }
 
     @Test
     public void testCreateNewRole() throws Exception {
-        Role userRole = createBasicRole();
+        Role userRole = createRole(RolesEnum.BASIC);
         roleRepository.save(userRole);
-        Role retrievedRole = roleRepository.findOne(BASIC_ROLE_ID);
+        Role retrievedRole = roleRepository.findOne(RolesEnum.BASIC.getId());
         Assert.assertNotNull(retrievedRole);
     }
 
     @Test
     public void testCreateNewUser() throws Exception {
-        Plan basicPlan = createBasicPlan();
+        Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
 
-        User basicUser = createBasicUser();
+        User basicUser = UsersUtils.createBasicUser();
         basicUser.setPlan(basicPlan);
 
-        Role basicRole = createBasicRole();
+        Role basicRole = createRole(RolesEnum.BASIC);
         Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole();
-        userRole.setUser(basicUser);
-        userRole.setRole(basicRole);
+        UserRole userRole = new UserRole(basicUser, basicRole);
         userRoles.add(userRole);
 
         basicUser.getUserRoles().addAll(userRoles);
@@ -100,40 +97,15 @@ public class RepositoryIntegrationTest {
         }
 
 
-        Role retrievedRole = roleRepository.findOne(BASIC_ROLE_ID);
+        Role retrievedRole = roleRepository.findOne(RolesEnum.BASIC.getId());
         Assert.assertNotNull(retrievedRole);
     }
 
-    private Plan createBasicPlan() {
-        Plan plan = new Plan();
-        plan.setId(BASIC_PLAN_ID);
-        plan.setName("Basic");
-
-        return plan;
+    private Plan createPlan(PlansEnum planEnum) {
+        return new Plan(planEnum);
     }
 
-    private Role createBasicRole() {
-        Role role = new Role();
-        role.setId(BASIC_ROLE_ID);
-        role.setName("ROLE_USER");
-
-        return role;
+    private Role createRole(RolesEnum rolesEnum) {
+        return new Role(rolesEnum);
     }
-
-    private User createBasicUser() {
-        User user = new User();
-        user.setUsername("basicUser");
-        user.setPassword("secret");
-        user.setEmail("basic@user.com");
-        user.setFirstName("Firstname");
-        user.setLastName("Lastname");
-        user.setPhoneNumber("+52-6647894561");
-        user.setCountry("MX");
-        user.setEnabled(true);
-        user.setDescription("A basic user here");
-        user.setProfileImageUrl("http:images.com/user/IUs25X28");
-
-        return user;
-    }
-
 }
