@@ -6,7 +6,7 @@ import com.f6rnando.backend.persistence.domain.backend.UserRole;
 import com.f6rnando.backend.service.UserService;
 import com.f6rnando.enums.PlansEnum;
 import com.f6rnando.enums.RolesEnum;
-import com.f6rnando.utils.UsersUtils;
+import com.f6rnando.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,11 @@ public class DevopsApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user = UsersUtils.createBasicUser();
+		User user = UserUtils.createBasicUser();
 		Set<UserRole> userRoles = new HashSet<>();
-		userRoles.add(new UserRole(user, new Role(RolesEnum.BASIC)));
+		userRoles.add(new UserRole(user, new Role(RolesEnum.PRO)));
 		logger.debug("Creating a new user with username {}", user.getUsername());
-		userService.createUser(user, PlansEnum.BASIC, userRoles);
+		userService.createUser(user, PlansEnum.PRO, userRoles);
 		logger.info("User {} created", user.getUsername());
 	}
 }

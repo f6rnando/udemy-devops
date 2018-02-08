@@ -7,16 +7,16 @@ import com.f6rnando.backend.persistence.domain.backend.User;
  2018-02-08
  *************************************/
 
-public class UsersUtils {
+public class UserUtils {
 
     /** Non Instantiable */
-    private UsersUtils() {
+    private UserUtils() {
         throw new AssertionError("Non instantiable");
     }
 
     /**
      * Creates a user with basic attributes set
-     * @return
+     * @return user
      */
     public static User createBasicUser() {
         User user = new User();
@@ -29,6 +29,26 @@ public class UsersUtils {
         user.setCountry("MX");
         user.setEnabled(true);
         user.setDescription("A basic user here");
+        user.setProfileImageUrl("http:images.com/user/IUs25X28");
+
+        return user;
+    }
+
+    /**
+     * Creates a user with PRO attributes set
+     * @return user
+     */
+    public static User createProUser() {
+        User user = new User();
+        user.setUsername("proUser");
+        user.setPassword("secret");
+        user.setEmail("pro@user.com");
+        user.setFirstName("Firstname");
+        user.setLastName("Lastname");
+        user.setPhoneNumber("+52-6647894561");
+        user.setCountry("MX");
+        user.setEnabled(true);
+        user.setDescription("A PRO user here");
         user.setProfileImageUrl("http:images.com/user/IUs25X28");
 
         return user;
