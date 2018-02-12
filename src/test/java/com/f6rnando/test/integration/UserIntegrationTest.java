@@ -5,12 +5,8 @@ import com.f6rnando.backend.persistence.domain.backend.Plan;
 import com.f6rnando.backend.persistence.domain.backend.Role;
 import com.f6rnando.backend.persistence.domain.backend.User;
 import com.f6rnando.backend.persistence.domain.backend.UserRole;
-import com.f6rnando.backend.persistence.repositories.PlanRepository;
-import com.f6rnando.backend.persistence.repositories.RoleRepository;
-import com.f6rnando.backend.persistence.repositories.UserRepository;
 import com.f6rnando.enums.PlansEnum;
 import com.f6rnando.enums.RolesEnum;
-import com.f6rnando.utils.UserUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,11 +15,9 @@ import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /************************************
@@ -33,18 +27,9 @@ import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DevopsApplication.class)
-public class RepositoryIntegrationTest {
+public class UserIntegrationTest extends AbstractIntegrationTest {
     // The application logger
-    private static final Logger logger = LoggerFactory.getLogger(RepositoryIntegrationTest.class);
-
-    @Autowired
-    private PlanRepository planRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private static final Logger logger = LoggerFactory.getLogger(UserIntegrationTest.class);
 
     @Rule
     public TestName testName = new TestName();
@@ -107,33 +92,4 @@ public class RepositoryIntegrationTest {
         userRepository.delete(basicUser.getId());
     }
 
-    /*      PRIVATE METHODS     */
-
-    private Plan createPlan(PlansEnum planEnum) {
-        return new Plan(planEnum);
-    }
-
-    private Role createRole(RolesEnum rolesEnum) {
-        return new Role(rolesEnum);
-    }
-
-    private User createUser(String username, String email) {
-        Plan basicPlan = createPlan(PlansEnum.BASIC);
-        planRepository.save(basicPlan);
-
-        Role basicRole = createRole(RolesEnum.BASIC);
-        roleRepository.save(basicRole);
-
-        User basicUser = UserUtils.createBasicUser(username, email);
-        basicUser.setPlan(basicPlan);
-
-        Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole(basicUser, basicRole);
-        userRoles.add(userRole);
-
-        basicUser.getUserRoles().addAll(userRoles);
-        basicUser = userRepository.save(basicUser);
-
-        return basicUser;
-    }
 }
