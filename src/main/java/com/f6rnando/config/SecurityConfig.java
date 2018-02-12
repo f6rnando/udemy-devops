@@ -2,13 +2,16 @@ package com.f6rnando.config;
 
 import com.f6rnando.backend.service.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public Environment env;
 
+    /** The encryption constant SALT */
+    private static final String SALT = "edrfcASHGS;%5sdffvSexvwdvvsx";
+
     /**
      * Public allowed URLs
      */
@@ -38,6 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/", "/about/**", "/contact/**", "/error/**/*",
             "/console/**"
     };
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -64,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userSecurityService);
+                .userDetailsService(userSecurityService)
+                .passwordEncoder(passwordEncoder());
     }
 }
