@@ -10,7 +10,9 @@ import com.f6rnando.enums.PlansEnum;
 import com.f6rnando.enums.RolesEnum;
 import com.f6rnando.utils.UserUtils;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +43,17 @@ public class UserServiceIntegrationTest {
     @Autowired
     private UserSecurityService userSecurityService;
 
+    @Rule
+    public TestName testName = new TestName();
+
     @Test
     public void testCreateNewUser() throws Exception {
         Set<UserRole> userRoles = new HashSet<>();
-        User basicUser = UserUtils.createBasicUser();
+        String username = testName.getMethodName();
+        String email = testName.getMethodName() + "@f6rnando.com";
+        logger.debug("The username: {}", username);
+        logger.debug("The email: {}", email);
+        User basicUser = UserUtils.createBasicUser(username, email);
         userRoles.add(new UserRole(basicUser, new Role(RolesEnum.BASIC)));
         User user = userService.createUser(basicUser, PlansEnum.BASIC, userRoles);
 

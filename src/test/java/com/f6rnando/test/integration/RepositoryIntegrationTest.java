@@ -13,8 +13,12 @@ import com.f6rnando.enums.RolesEnum;
 import com.f6rnando.utils.UserUtils;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -30,6 +34,8 @@ import java.util.Set;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DevopsApplication.class)
 public class RepositoryIntegrationTest {
+    // The application logger
+    private static final Logger logger = LoggerFactory.getLogger(RepositoryIntegrationTest.class);
 
     @Autowired
     private PlanRepository planRepository;
@@ -39,6 +45,9 @@ public class RepositoryIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Rule
+    public TestName testName = new TestName();
 
     @Before
     public void init() {
@@ -64,8 +73,10 @@ public class RepositoryIntegrationTest {
     }
 
     @Test
-    public void testCreateNewUser() throws Exception {
-        User basicUser = createUser();
+    public void testCreateUser() throws Exception {
+        String username = testName.getMethodName();
+        String email = testName.getMethodName() + "@f6rnando.com";
+        User basicUser = createUser(username, email);
 
         basicUser = userRepository.save(basicUser);
         User newlyCreatedUser = userRepository.findOne(basicUser.getId());
@@ -87,7 +98,12 @@ public class RepositoryIntegrationTest {
     }
 
     public void testDeleteUser() {
-        User basicUser = createUser();
+        String username = testName.getMethodName();
+        String email = testName.getMethodName() + "@f6rnando.com";
+        logger.debug("The username: {}", username);
+        logger.debug("The email: {}", email);
+
+        User basicUser = createUser(username, email);
         userRepository.delete(basicUser.getId());
     }
 
@@ -101,14 +117,14 @@ public class RepositoryIntegrationTest {
         return new Role(rolesEnum);
     }
 
-    private User createUser() {
+    private User createUser(String username, String email) {
         Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
 
         Role basicRole = createRole(RolesEnum.BASIC);
         roleRepository.save(basicRole);
 
-        User basicUser = UserUtils.createBasicUser();
+        User basicUser = UserUtils.createBasicUser(username, email);
         basicUser.setPlan(basicPlan);
 
         Set<UserRole> userRoles = new HashSet<>();

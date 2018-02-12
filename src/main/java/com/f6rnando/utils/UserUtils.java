@@ -16,13 +16,15 @@ public class UserUtils {
 
     /**
      * Creates a user with basic attributes set
-     * @return user
+     * @param username The site unique username
+     * @param email The user's unique email
+     * @return User entity
      */
-    public static User createBasicUser() {
+    public static User createBasicUser(String username, String email) {
         User user = new User();
-        user.setUsername("basicUser");
+        user.setUsername(username);
         user.setPassword("secret");
-        user.setEmail("basic@user.com");
+        user.setEmail(email);
         user.setFirstName("Firstname");
         user.setLastName("Lastname");
         user.setPhoneNumber("+52-6647894561");
