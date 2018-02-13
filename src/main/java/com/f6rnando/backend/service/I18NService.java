@@ -2,7 +2,7 @@
     Created by f6rnando@gmail.com
     2018-02-01
 *************************************/
-package com.f6rnando.web.i18n;
+package com.f6rnando.backend.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

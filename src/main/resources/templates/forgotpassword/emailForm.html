@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+<div th:replace="common/navbar :: common-navbar" />
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center">
+            <div th:if="${mailSent != null}" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <p th:text="#{forgotpassword.message.sent.success}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1 class="text-center" th:text="#{forgotpassword.fill.in.form.below}"></h1>
+            <br />
+            <div class="well">
+                <form id="forgotPasswordForm" th:action="@{/forgotpassword}" method="post" role="form">
+                    <div class="form-group">
+                        <label for="email" th:text="#{form.email}"></label>
+                        <input type="email" class="form-control" id="email" name="email" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" th:text="#{forgotpassword.submit.text}"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div><!-- /.container -->
+
+<div th:replace="common/header :: before-body-script" />
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 package com.f6rnando;
 
-import com.f6rnando.web.i18n.I18NService;
+import com.f6rnando.backend.service.I18NService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

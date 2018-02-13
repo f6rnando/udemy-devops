@@ -1,6 +1,9 @@
 package com.f6rnando.utils;
 
 import com.f6rnando.backend.persistence.domain.backend.User;
+import com.f6rnando.web.controllers.ForgotMyPasswordController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /************************************
  Created by f6rnando@gmail.com
@@ -54,5 +57,20 @@ public class UserUtils {
         user.setProfileImageUrl("http:images.com/user/IUs25X28");
 
         return user;
+    }
+
+    /**
+     * Builds an URL to reset the user password
+     * @param request
+     * @param userID
+     * @param token
+     * @return passwordRestURL
+     */
+    public static String createPasswordResetUrl(HttpServletRequest request, long userID, String token) {
+        String passwordRestURL = request.getScheme() + "://" + request.getServerName() + ":" +
+                request.getServerPort() + request.getContextPath() +
+                ForgotMyPasswordController.CHANGE_PASSWORD_PATH + "?id=" + userID + "&token=" + token;
+
+        return passwordRestURL;
     }
 }
