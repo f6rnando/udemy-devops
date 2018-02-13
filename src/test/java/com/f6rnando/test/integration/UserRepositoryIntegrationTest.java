@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
+import java.util.UUID;
 
 /************************************
  Created by f6rnando@gmail.com
@@ -27,9 +28,9 @@ import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DevopsApplication.class)
-public class UserIntegrationTest extends AbstractIntegrationTest {
+public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     // The application logger
-    private static final Logger logger = LoggerFactory.getLogger(UserIntegrationTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryIntegrationTest.class);
 
     @Rule
     public TestName testName = new TestName();
@@ -82,7 +83,8 @@ public class UserIntegrationTest extends AbstractIntegrationTest {
         Assert.assertNotNull(retrievedRole);
     }
 
-    public void testDeleteUser() {
+    @Test
+    public void testDeleteUser() throws Exception {
         String username = testName.getMethodName();
         String email = testName.getMethodName() + "@f6rnando.com";
         logger.debug("The username: {}", username);
@@ -92,4 +94,25 @@ public class UserIntegrationTest extends AbstractIntegrationTest {
         userRepository.delete(basicUser.getId());
     }
 
+    @Test
+    public void testGetUserByEmail() throws Exception {
+        User user = createUser(testName);
+        User newFoundUser = userRepository.findByEmail(user.getEmail());
+
+        Assert.assertNotNull(newFoundUser);
+        Assert.assertNotNull(newFoundUser.getId());
+    }
+
+    @Test
+    public void testUpdateUserPassword() {
+        User user = createUser(testName);
+        Assert.assertNotNull(user);
+        Assert.assertNotNull(user.getId());
+
+        String newPassword = UUID.randomUUID().toString();
+
+        userRepository.updateUserPassword(user.getId(), newPassword);
+        user = userRepository.findOne(user.getId());
+        Assert.assertEquals(newPassword, user.getPassword());
+    }
 }

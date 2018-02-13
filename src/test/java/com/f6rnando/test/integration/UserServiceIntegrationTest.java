@@ -5,7 +5,6 @@ import com.f6rnando.backend.persistence.domain.backend.Role;
 import com.f6rnando.backend.persistence.domain.backend.User;
 import com.f6rnando.backend.persistence.domain.backend.UserRole;
 import com.f6rnando.backend.service.UserSecurityService;
-import com.f6rnando.backend.service.UserService;
 import com.f6rnando.enums.PlansEnum;
 import com.f6rnando.enums.RolesEnum;
 import com.f6rnando.utils.UserUtils;
@@ -32,13 +31,10 @@ import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DevopsApplication.class)
-public class UserServiceIntegrationTest {
+public class UserServiceIntegrationTest extends AbstractPRTServiceIntegrationTest {
 
     // The application logger
     private static final Logger logger = LoggerFactory.getLogger(UserServiceIntegrationTest.class);
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private UserSecurityService userSecurityService;
@@ -48,14 +44,7 @@ public class UserServiceIntegrationTest {
 
     @Test
     public void testCreateNewUser() throws Exception {
-        Set<UserRole> userRoles = new HashSet<>();
-        String username = testName.getMethodName();
-        String email = testName.getMethodName() + "@f6rnando.com";
-        logger.debug("The username: {}", username);
-        logger.debug("The email: {}", email);
-        User basicUser = UserUtils.createBasicUser(username, email);
-        userRoles.add(new UserRole(basicUser, new Role(RolesEnum.BASIC)));
-        User user = userService.createUser(basicUser, PlansEnum.BASIC, userRoles);
+        User user = createUser(testName);
 
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getId());
