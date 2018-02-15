@@ -25,10 +25,11 @@
             <h1 class="text-center" th:text="#{forgotpassword.fill.in.form.below}"></h1>
             <br />
             <div class="well">
-                <form id="forgotPasswordForm" th:action="@{/forgotpassword}" method="post" role="form">
+                <form id="forgotPasswordForm" th:action="@{/forgotpassword}" method="post" role="form" data-toggle="validator">
                     <div class="form-group">
                         <label for="email" th:text="#{form.email}"></label>
-                        <input type="email" class="form-control" id="email" name="email" />
+                        <input type="email" class="form-control" id="email" name="email" required="required" />
+                        <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" th:text="#{forgotpassword.submit.text}"></button>

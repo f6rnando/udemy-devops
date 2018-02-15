@@ -18,27 +18,29 @@
                     <form id="contact-form" th:action="@{/contact/}"
                           th:object="${feedback}" method="post" class="text-left" data-toggle="validator">
                         <div class="form-group">
-                            <label for="email" th:text="#{form.email.required}"></label>
+                            <label for="email" th:text="#{form.email}"></label>
                             <input type="email" id="email" th:field="*{email}" class="form-control" required="required" />
                             <div class="help-block with-errors"></div>
                         </div><!-- /.form-group - Email -->
 
                         <div class="form-group">
-                            <label for="firstName" th:text="#{form.firstName.required}"></label>
+                            <label for="firstName" th:text="#{form.firstName}"></label>
                             <input type="text" id="firstName" th:field="*{firstName}" class="form-control" required="required" />
                             <div class="help-block with-errors"></div>
                         </div><!-- /.form-group - FirstName -->
 
                         <div class="form-group">
-                            <label for="lastName" th:text="#{form.lastName.required}"></label>
+                            <label for="lastName" th:text="#{form.lastName}"></label>
                             <input type="text" id="lastName" th:field="*{lastName}" class="form-control" required="required" />
                             <div class="help-block with-errors"></div>
                         </div><!-- /.form-group - LastName -->
 
                         <div class="form-group">
                             <label for="feedback" th:text="#{contact.feedback.form.text}"></label>
-                            <textarea id="feedback" th:field="*{feedback}" class="form-control" ></textarea>
+                            <textarea id="feedback" th:field="*{feedback}" class="form-control" required="required" ></textarea>
                         </div><!-- /.form-group - Feedback -->
+
+                        <small><p class="text-right text-danger" th:text="#{form.required.fields}"></p></small>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" th:text="#{form.submit}"></button>
