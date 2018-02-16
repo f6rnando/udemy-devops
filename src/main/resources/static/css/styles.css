@@ -2,6 +2,10 @@ body {
     padding-top: 80px;
 }
 
+p.index-account-desc {
+    min-height: 3em;
+}
+
 .starter-template {
     padding: 40px 15px;
     text-align: center;

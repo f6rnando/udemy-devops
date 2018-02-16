@@ -17,6 +17,27 @@
         </p>
     </div>
 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h1 th:text="#{index.h1.basic}" class="text-center"></h1>
+                    <p class="index-account-desc" th:text="#{index.p.basic.text}"></p>
+                    <a type="button" href="#" th:text="#{index.a.basic}" class="btn btn-primary btn-block"></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h1 th:text="#{index.h1.pro}" class="text-center"></h1>
+                    <p class="index-account-desc" th:text="#{index.p.pro.text}"></p>
+                    <a type="button" href="#" th:text="#{index.a.pro}" class="btn btn-success btn-block"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div><!-- /.container -->
 
 <div th:replace="common/header :: before-body-script" />
