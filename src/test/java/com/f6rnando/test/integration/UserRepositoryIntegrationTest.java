@@ -43,7 +43,7 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testCreateNewPlan() throws Exception {
+    public void testCreateNewPlan() {
         Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
         Plan retrievedPlan = planRepository.findOne(PlansEnum.BASIC.getId());
@@ -51,7 +51,7 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testCreateNewRole() throws Exception {
+    public void testCreateNewRole() {
         Role userRole = createRole(RolesEnum.BASIC);
         roleRepository.save(userRole);
         Role retrievedRole = roleRepository.findOne(RolesEnum.BASIC.getId());
@@ -59,7 +59,7 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testCreateUser() throws Exception {
+    public void testCreateUser() {
         String username = testName.getMethodName();
         String email = testName.getMethodName() + "@f6rnando.com";
         User basicUser = createUser(username, email);
@@ -84,7 +84,7 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testDeleteUser() throws Exception {
+    public void testDeleteUser() {
         String username = testName.getMethodName();
         String email = testName.getMethodName() + "@f6rnando.com";
         logger.debug("The username: {}", username);
@@ -95,7 +95,7 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testGetUserByEmail() throws Exception {
+    public void testGetUserByEmail() {
         User user = createUser(testName);
         User newFoundUser = userRepository.findByEmail(user.getEmail());
 

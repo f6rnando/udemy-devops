@@ -53,6 +53,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- PODAM - https://mvnrepository.com/artifact/uk.co.jemos.podam/podam -->
+		<dependency>
+			<groupId>uk.co.jemos.podam</groupId>
+			<artifactId>podam</artifactId>
+			<version>6.0.4.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<!-- Bootstrap - https://mvnrepository.com/artifact/org.webjars/bootstrap -->
 		<dependency>
@@ -86,6 +94,12 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
     </dependencies>
 
 	<build>

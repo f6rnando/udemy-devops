@@ -14,11 +14,11 @@ public interface EmailService {
      * Sends an email with the content in the Feedback POJO
      * @param feedbackPojo The Feedback POJO
      */
-    public void sendFeedbackEmail(FeedbackPojo feedbackPojo);
+    void sendFeedbackEmail(FeedbackPojo feedbackPojo);
 
     /**
      * Sends an email with the content of the Simple Mail Message object
      * @param message The object containing the email
      */
-    public void sendGenericEmailMessage(SimpleMailMessage message);
+    void sendGenericEmailMessage(SimpleMailMessage message);
 }

@@ -43,7 +43,7 @@ public class UserServiceIntegrationTest extends AbstractPRTServiceIntegrationTes
     public TestName testName = new TestName();
 
     @Test
-    public void testCreateNewUser() throws Exception {
+    public void testCreateNewUser() {
         User user = createUser(testName);
 
         Assert.assertNotNull(user);
@@ -51,7 +51,7 @@ public class UserServiceIntegrationTest extends AbstractPRTServiceIntegrationTes
     }
 
     @Test
-    public void testLoadUserByUsername() throws Exception {
+    public void testLoadUserByUsername() {
         User proUser = UserUtils.createProUser();
         UserDetails userDetails = null;
 

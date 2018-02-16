@@ -75,6 +75,30 @@ public class User implements Serializable, UserDetails {
     public User() {
     }
 
+    public User(String username, String password, String email, String firstName, String lastName, String phoneNumber, String description, String country, boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+        this.country = country;
+        this.enabled = enabled;
+    }
+
+    public User(User newUser) {
+        this.username = newUser.getUsername();
+        this.password = newUser.getPassword();
+        this.email = newUser.getEmail();
+        this.firstName = newUser.getFirstName();
+        this.lastName = newUser.getLastName();
+        this.phoneNumber = newUser.getPhoneNumber();
+        this.description = newUser.getDescription();
+        this.country = newUser.getCountry();
+        this.enabled = true;
+    }
+
     public long getId() {
         return id;
     }

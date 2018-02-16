@@ -47,7 +47,7 @@ public class PasswordResetTokenIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testTokenExpiration() throws Exception {
+    public void testTokenExpiration() {
         User user = createUser(testName);
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getId());
@@ -63,7 +63,7 @@ public class PasswordResetTokenIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testFindTokenByTokenValue() throws Exception {
+    public void testFindTokenByTokenValue() {
         User user = createUser(testName);
         String token = UUID.randomUUID().toString();
         LocalDateTime now = LocalDateTime.now(Clock.systemUTC());
@@ -78,7 +78,7 @@ public class PasswordResetTokenIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testDeleteToken() throws Exception {
+    public void testDeleteToken() {
         User user = createUser(testName);
         String token = UUID.randomUUID().toString();
         LocalDateTime now = LocalDateTime.now(Clock.systemUTC());
@@ -92,7 +92,7 @@ public class PasswordResetTokenIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testCascadeDeleteFromUserEntity() throws Exception {
+    public void testCascadeDeleteFromUserEntity() {
         User user = createUser(testName);
         String token = UUID.randomUUID().toString();
         LocalDateTime now = LocalDateTime.now(Clock.systemUTC());
@@ -105,7 +105,7 @@ public class PasswordResetTokenIntegrationTest extends AbstractIntegrationTest {
         Assert.assertTrue(shouldBeEmpty.isEmpty());
     }
 
-    public void testMultipleTokensAreReturnedWhenQueryingById() throws Exception {
+    public void testMultipleTokensAreReturnedWhenQueryingById() {
         User user = createUser(testName);
         LocalDateTime now = LocalDateTime.now(Clock.systemUTC());
 

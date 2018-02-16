@@ -16,7 +16,7 @@ public class DevopsApplicationTests {
     private I18NService i18NService;
 
 	@Test
-    public void testMessageByLocalService() throws Exception {
+    public void testMessageByLocalService() {
 	    String expectedResult = "Bootstrap starter template";
 	    String messageId = "index.main.callout";
 	    String actual = i18NService.getMessage(messageId);

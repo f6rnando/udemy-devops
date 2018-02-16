@@ -29,7 +29,7 @@ public class PasswordResetTokenServiceIntegrationTest extends AbstractPRTService
     public TestName testName = new TestName();
 
     @Test
-    public void testCreateNewTokenForUserEmail() throws Exception {
+    public void testCreateNewTokenForUserEmail() {
         User user = createUser(testName);
         PasswordResetToken passwordResetToken = passwordResetTokenService.createPasswordResetTokenByEmail(user.getEmail());
 
@@ -38,7 +38,7 @@ public class PasswordResetTokenServiceIntegrationTest extends AbstractPRTService
     }
 
     @Test
-    public void testFindByToken() throws Exception {
+    public void testFindByToken() {
         User user = createUser(testName);
         PasswordResetToken passwordResetToken = passwordResetTokenService.createPasswordResetTokenByEmail(user.getEmail());
 

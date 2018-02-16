@@ -41,7 +41,7 @@ public class DevopsApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		User user = UserUtils.createBasicUser(webmasterUsername, webmasterEmail);
 		user.setPassword(webmasterPassword);
 		Set<UserRole> userRoles = new HashSet<>();
