@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+<div th:replace="common/navbar :: common-navbar" />
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div th:if="${signedUp != null}">
+                <div th:if="${signedUp == 'true'}" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                    <p th:text="#{signup.profile.created.success}" class="text-center"></p>
+                </div>
+                <div th:if="${passwordReset == 'false'}" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                    <p th:text="#{message}" class="text-center"></p>
+                </div>
+            </div>
+
+            <div class="well">
+                <h1 th:if="${#httpServletRequest.getParameter('planID') == '1'}" th:text="#{signup.h1.basic.profile}"></h1>
+                <h1 th:if="${#httpServletRequest.getParameter('planID') == '2'}" th:text="#{signup.h1.pro.profile}"></h1>
+                <p class="lead" th:text="#{signup.p.lead.text}"></p>
+
+                <form id="signupForm" th:action="@{/signup}" method="post" class="text-left" enctype="multipart/form-data"
+                      th:object="${__${T(com.f6rnando.web.controllers.SignUpController).PAYLOAD_MODEL_KEY_NAME}__}"
+                      data-toggle="validator">
+
+                    <!--Hidden field for the POST request-->
+                    <div th:if="${param.containsKey('planID')}">
+                        <input type="hidden" name="planID" th:value="${#httpServletRequest}.getParameter('planID')" />
+                    </div>
+
+                    <div class="form-group">
+                        <div th:if="${duplicatedUsername}">
+                            <label for="username" th:text="#{signup.form.error.duplicated.username}"></label>
+                            <input type="text" id="username" th:field="*{username}" class="form-control fieldError" />
+                        </div>
+                        <div th:if="${duplicatedUsername == null}">
+                            <label for="username" th:text="#{form.username}"></label>
+                            <input type="text" id="username" th:field="*{username}" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div th:if="${duplicatedEmail}">
+                            <label for="email" th:text="#{signup.form.error.duplicated.email}"></label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control fieldError" />
+                        </div>
+                        <div th:if="${duplicatedEmail == null}">
+                            <label for="username" th:text="#{form.email}"></label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div><!-- /.container -->
+
+<div th:replace="common/header :: before-body-script" />
+
+</body>
+</html>

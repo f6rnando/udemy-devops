@@ -2,6 +2,7 @@ package com.f6rnando.config;
 
 import com.f6rnando.backend.service.UserSecurityService;
 import com.f6rnando.web.controllers.ForgotMyPasswordController;
+import com.f6rnando.web.controllers.SignUpController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/", "/about/**", "/contact/**", "/error/**/*",
             "/console/**",
             ForgotMyPasswordController.FORGOT_PASSWORD_URL_MAPPING,
-            ForgotMyPasswordController.CHANGE_PASSWORD_PATH
+            ForgotMyPasswordController.CHANGE_PASSWORD_PATH,
+            SignUpController.SIGNUP_URL_MAPPING
     };
 
     @Bean

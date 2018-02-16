@@ -23,7 +23,8 @@
                 <div class="panel-body">
                     <h1 th:text="#{index.h1.basic}" class="text-center"></h1>
                     <p class="index-account-desc" th:text="#{index.p.basic.text}"></p>
-                    <a type="button" href="#" th:text="#{index.a.basic}" class="btn btn-primary btn-block"></a>
+                    <a type="button" class="btn btn-primary btn-block"
+                       th:href="@{/signup?planID=1}" th:text="#{index.a.basic}"></a>
                 </div>
             </div>
         </div>
@@ -32,7 +33,8 @@
                 <div class="panel-body">
                     <h1 th:text="#{index.h1.pro}" class="text-center"></h1>
                     <p class="index-account-desc" th:text="#{index.p.pro.text}"></p>
-                    <a type="button" href="#" th:text="#{index.a.pro}" class="btn btn-success btn-block"></a>
+                    <a type="button" class="btn btn-success btn-block"
+                       th:href="@{/signup?planID=2}" th:text="#{index.a.pro}"></a>
                 </div>
             </div>
         </div>
