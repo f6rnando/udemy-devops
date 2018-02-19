@@ -1,7 +1,5 @@
 package com.f6rnando.web.domain.frontend;
 
-import javax.validation.constraints.NotNull;
-
 /************************************
  Created by f6rnando@gmail.com
  2018-02-16
@@ -11,16 +9,12 @@ public class ProAccountPayload extends BasicAccountPayload {
 
     /*      FIELDS      */
 
-    @NotNull
     private String cardNumber;
 
-    @NotNull
     private String cardCode;
 
-    @NotNull
     private String cardMonth;
 
-    @NotNull
     private String cardYear;
 
     /*      METHODS     */

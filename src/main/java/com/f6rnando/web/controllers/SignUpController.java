@@ -1,9 +1,11 @@
 package com.f6rnando.web.controllers;
 
+import com.f6rnando.config.CountriesConfig;
 import com.f6rnando.enums.PlansEnum;
 import com.f6rnando.web.domain.frontend.ProAccountPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +27,12 @@ public class SignUpController {
 
     public static final String SIGNUP_URL_MAPPING = "/signup";
 
-    public static final String PAYLOAD_MODEL_KEY_NAME = "/payload";
+    public static final String PAYLOAD_MODEL_KEY_NAME = "payload";
 
     public static final String SUBSCRIPTION_VIEW_NAME = "registration/signup";
+
+    @Autowired
+    private CountriesConfig countriesConfig;
 
     /*      METHODS      */
 
@@ -39,6 +44,7 @@ public class SignUpController {
         }
 
         model.addAttribute(PAYLOAD_MODEL_KEY_NAME, new ProAccountPayload());
+        model.addAttribute("countries", countriesConfig.getKey());
 
         return SUBSCRIPTION_VIEW_NAME;
     }

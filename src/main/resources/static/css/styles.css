@@ -48,3 +48,7 @@ p.index-account-desc {
     line-height: 1;
     letter-spacing: -1px;
 }
+
+.field-error {
+    border: 2px solid red;
+}

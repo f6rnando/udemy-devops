@@ -37,29 +37,80 @@
 
                     <!--Hidden field for the POST request-->
                     <div th:if="${param.containsKey('planID')}">
-                        <input type="hidden" name="planID" th:value="${#httpServletRequest}.getParameter('planID')" />
+                        <input type="hidden" name="planID" th:value="${#httpServletRequest.getParameter('planID')}" />
                     </div>
 
                     <div class="form-group">
                         <div th:if="${duplicatedUsername}">
                             <label for="username" th:text="#{signup.form.error.duplicated.username}"></label>
-                            <input type="text" id="username" th:field="*{username}" class="form-control fieldError" />
+                            <input type="text" id="username" th:field="*{username}" class="form-control field-error"
+                                   name="username" required="required" />
                         </div>
                         <div th:if="${duplicatedUsername == null}">
-                            <label for="username" th:text="#{form.username}"></label>
-                            <input type="text" id="username" th:field="*{username}" class="form-control" />
+                            <label for="username" th:text="#{form.username.req}"></label>
+                            <input type="text" id="username" th:field="*{username}" class="form-control"
+                                   name="username" required="required" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div th:if="${duplicatedEmail}">
                             <label for="email" th:text="#{signup.form.error.duplicated.email}"></label>
-                            <input type="email" id="email" th:field="*{email}" class="form-control fieldError" />
+                            <input type="email" id="email" th:field="*{email}" class="form-control field-error"
+                                   name="email" required="required" />
                         </div>
                         <div th:if="${duplicatedEmail == null}">
-                            <label for="username" th:text="#{form.email}"></label>
-                            <input type="email" id="email" th:field="*{email}" class="form-control" />
+                            <label for="username" th:text="#{form.email.req}"></label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control"
+                                   name="email" required="required" />
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" th:text="#{form.password.req}"></label>
+                        <input type="password" id="password" th:field="*{password}" class="form-control"
+                               name="password" required="required" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" th:text="#{form.confirmPassword.req}"></label>
+                        <input type="password" id="confirmPassword" th:field="*{confirmPassword}"
+                               data-match="#password" class="form-control" name="confirmPassword" required="required" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName" th:text="#{form.firstName.req}"></label>
+                        <input type="text" id="firstName" th:field="*{firstName}" class="form-control"
+                               name="firstName" required="required" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName" th:text="#{form.lastName.req}"></label>
+                        <input type="text" id="lastName" th:field="*{lastName}" class="form-control"
+                               name="lastName" required="required" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" th:text="#{form.description}"></label>
+                        <textarea name="description" id="description" th:field="*{description}"
+                                  class="form-control" rows="5"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country" th:text="#{form.country.req}"></label>
+                        <select name="country" id="country" class="form-control" th:field="*{country}"
+                                th:each="country ${countries}">
+                            <option th:value="${country.key}" th:text="${country.value}">Afghanistan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNumber" th:text="#{form.phoneNumber}"></label>
+                        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" name="phoneNumber" />
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" th:text="#{form.submit}"></button>
                     </div>
                 </form>
             </div>
