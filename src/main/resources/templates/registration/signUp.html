@@ -98,9 +98,8 @@
 
                     <div class="form-group">
                         <label for="country" th:text="#{form.country.req}"></label>
-                        <select name="country" id="country" class="form-control" th:field="*{country}"
-                                th:each="country ${countries}">
-                            <option th:value="${country.key}" th:text="${country.value}">Afghanistan</option>
+                        <select name="country" id="country" class="form-control" th:field="*{country}">
+                            <option th:each="countryKey : ${countryMap}" th:value="${countryKey.key}" th:text="${countryKey.value}"></option>
                         </select>
                     </div>
 

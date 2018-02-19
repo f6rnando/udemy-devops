@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 /************************************
  Created by f6rnando@gmail.com
  2018-02-16
@@ -43,8 +46,11 @@ public class SignUpController {
             throw new IllegalArgumentException("The Plan ID " + planID + "is not valid");
         }
 
+        // Sorting the Map
+        Map<String, String> countryMap = new TreeMap<>(countriesConfig.getKey());
+
         model.addAttribute(PAYLOAD_MODEL_KEY_NAME, new ProAccountPayload());
-        model.addAttribute("countries", countriesConfig.getKey());
+        model.addAttribute("countryMap", countryMap);
 
         return SUBSCRIPTION_VIEW_NAME;
     }
