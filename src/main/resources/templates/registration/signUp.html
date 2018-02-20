@@ -97,6 +97,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="file" th:text="#{form.profile.img}"></label>
+                        <input type="file" id="file" name="file" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
                         <label for="country" th:text="#{form.country.req}"></label>
                         <select name="country" id="country" class="form-control" th:field="*{country}">
                             <option th:each="countryKey : ${countryMap}" th:value="${countryKey.key}" th:text="${countryKey.value}"></option>

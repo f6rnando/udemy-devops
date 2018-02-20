@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -84,6 +85,7 @@ public class SignUpController {
 
     @RequestMapping(value = SIGNUP_URL_MAPPING, method = RequestMethod.POST)
     public String signUpPost(@RequestParam(name = "planID") int planID,
+                             @RequestParam(name = "file", required = false) MultipartFile file,
                              @ModelAttribute(PAYLOAD_MODEL_KEY_NAME) @Valid ProAccountPayload payload,
                              ModelMap model) {
         // Sorting the Map
@@ -117,6 +119,17 @@ public class SignUpController {
             } else {
                 logger.debug("Transforming user payload into User domain object");
                 User user = UserUtils.fromWebUserToDomainUser(payload);
+
+                // Stores the profile image on Amazon S3 and stores the URL in the user's db record
+                if (file != null && !file.isEmpty()) {
+                    String profileImageUrl = null;
+                    if (profileImageUrl != null) {
+                        user.setProfileImageUrl(profileImageUrl);
+                    } else {
+                        logger.warn("There was a problem uploading the profile image to S3.");
+                        logger.warn("The user's profile will be created without the image");
+                    }
+                }
 
                 logger.debug("Retrieving plan from the database");
                 Plan selectedPlan = planService.findPlanById(planID);
