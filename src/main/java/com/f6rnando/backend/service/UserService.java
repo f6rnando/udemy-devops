@@ -68,6 +68,14 @@ public class UserService {
     public void updateUserPassword(long userId, String password) {
         password = passwordEncoder.encode(password);
         userRepository.updateUserPassword(userId, password);
-        logger.debug("Password updated successfuly for user id {}", userId);
+        logger.debug("Password updated successfully for user id {}", userId);
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
