@@ -1,9 +1,9 @@
 package com.f6rnando.backend.service;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.GetBucketLocationRequest;
+import com.amazonaws.services.s3.model.*;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,15 +104,50 @@ public class S3Service {
                 logger.info("Created bucket: {}", bucketName);
             }
 
-            // TODO debug what's the String returned by the getName method - https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html
+            // TODO change to return the name of the bucket
             bucketUrl = s3Client.getBucketLocation(new GetBucketLocationRequest(bucketName));
         } catch (SdkClientException e) {
             logger.error("An error occurred while connecting to S3. Will not execute action for bucket: {}", bucketName, e);
         }
 
+        logger.debug("Returning {}.", bucketUrl);
         return bucketUrl;
     }
 
-    private String storeProfileImageToS3(File tmpProfileImageFile, String username) {
+    /**
+     * @method storeProfileImageToS3
+     * @param resource The profile image File to be stored
+     * @param username The username
+     * @return {String} The URL path for the resource stored
+     */
+    private String storeProfileImageToS3(File resource, String username) {
+        String resourceUrl = null;
+
+        if (!resource.exists()) {
+            logger.error("The file {} does not exist", resource.getAbsolutePath());
+            throw new IllegalArgumentException("The file " + resource.getAbsolutePath() + " doesn't exist");
+        }
+
+        String rootBucketUrl = this.ensureBucketExists(bucketName);
+
+        if (rootBucketUrl != null) {
+            AccessControlList accessControlList = new AccessControlList();
+            accessControlList.grantPermission(GroupGrantee.AllUsers, Permission.Read);
+
+            String key = username + "/" + PROFILE_PICTURE_FILE_NAME + "." + FilenameUtils.getExtension(resource.getName());
+
+            try {
+                s3Client.putObject(new PutObjectRequest(bucketName, key, resource).withAccessControlList(accessControlList));
+                resourceUrl = s3Client.getUrl(bucketName, key).getPath();
+            } catch (AmazonClientException e) {
+                logger.error("A client exception occurred while trying to store the profile image {} on S3. " +
+                        "The profile image won't be stored", resource.getAbsolutePath(), e);
+            }
+        } else {
+            logger.error("The bucket {} does not exist and the application was not able to create it.", rootBucketUrl);
+            logger.error("The profile image won't be stored with the profile.");
+        }
+
+        return resourceUrl;
     }
 }

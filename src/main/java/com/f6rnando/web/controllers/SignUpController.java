@@ -5,6 +5,7 @@ import com.f6rnando.backend.persistence.domain.backend.Role;
 import com.f6rnando.backend.persistence.domain.backend.User;
 import com.f6rnando.backend.persistence.domain.backend.UserRole;
 import com.f6rnando.backend.service.PlanService;
+import com.f6rnando.backend.service.S3Service;
 import com.f6rnando.backend.service.UserService;
 import com.f6rnando.config.CountriesConfig;
 import com.f6rnando.enums.PlansEnum;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
 
 /************************************
@@ -65,6 +67,9 @@ public class SignUpController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private S3Service s3Service;
+
     /*      METHODS      */
 
     @RequestMapping(value = SIGNUP_URL_MAPPING, method = RequestMethod.GET)
@@ -87,7 +92,7 @@ public class SignUpController {
     public String signUpPost(@RequestParam(name = "planID") int planID,
                              @RequestParam(name = "file", required = false) MultipartFile file,
                              @ModelAttribute(PAYLOAD_MODEL_KEY_NAME) @Valid ProAccountPayload payload,
-                             ModelMap model) {
+                             ModelMap model) throws IOException {
         // Sorting the Map
         Map<String, String> countryMap = new TreeMap<>(countriesConfig.getKey());
         model.addAttribute("countryMap", countryMap);
@@ -122,7 +127,7 @@ public class SignUpController {
 
                 // Stores the profile image on Amazon S3 and stores the URL in the user's db record
                 if (file != null && !file.isEmpty()) {
-                    String profileImageUrl = null;
+                    String profileImageUrl = s3Service.storeProfileImage(file, payload.getUsername());
                     if (profileImageUrl != null) {
                         user.setProfileImageUrl(profileImageUrl);
                     } else {

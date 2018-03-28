@@ -1,5 +1,6 @@
 package com.f6rnando.config;
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -31,6 +32,7 @@ public class ApplicationConfig {
     @Bean
     public AmazonS3 s3Client() {
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                .withCredentials(new ProfileCredentialsProvider(awsProfileName))
                 .withRegion(Regions.US_WEST_1)
                 .build();
 
