@@ -7,7 +7,9 @@
 
 <div th:replace="common/navbar :: common-navbar" />
 
-<div class="container">
+
+
+<div class="container" th:with="planID=${#httpServletRequest.getParameter('planID')}">
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -27,8 +29,8 @@
             </div>
 
             <div class="well">
-                <h1 th:if="${#httpServletRequest.getParameter('planID') == '1'}" th:text="#{signup.h1.basic.profile}"></h1>
-                <h1 th:if="${#httpServletRequest.getParameter('planID') == '2'}" th:text="#{signup.h1.pro.profile}"></h1>
+                <h1 th:if="${planID == '1'}" th:text="#{signup.h1.basic.profile}"></h1>
+                <h1 th:if="${planID == '2'}" th:text="#{signup.h1.pro.profile}"></h1>
                 <p class="lead" th:text="#{signup.p.lead.text}"></p>
 
                 <form id="signupForm" th:action="@{/signup}" method="post" class="text-left" enctype="multipart/form-data"
@@ -113,6 +115,43 @@
                         <label for="phoneNumber" th:text="#{form.phoneNumber}"></label>
                         <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" name="phoneNumber" />
                     </div>
+
+                    <!--    Additional inputs for the Pro Account subscription      -->
+                    <div th:if="${planID == #strings.toString(T(com.f6rnando.enums.PlansEnum).PRO.getId())}">
+                        <div class="form-group">
+                            <label for="cardNumber" th:text="#{form.creditCardNumber.req}"></label>
+                            <input type="text" id="cardNumber" th:field="*{cardNumber}" class="form-control" required="required" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cardCode" th:text="#{form.creditCardCode.req}"></label>
+                            <input type="text" id="cardCode" th:field="*{cardCode}" class="form-control" required="required" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cardMonth" th:text="#{form.creditCardExpire.req}"></label>
+                            <select name="cardMonth" id="cardMonth">
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+
+                            <select name="cardYear" id="cardYear">
+                                <option th:each="i : ${#numbers.sequence(creditCardYearStart, creditCardYearFinish)}" th:value="${i}" th:text="${i}"></option>
+                            </select>
+                        </div>
+                    </div> <!--     /Additional Pro Account fields       -->
 
                     <div class="form-group">
                         <label for="description" th:text="#{form.description}"></label>

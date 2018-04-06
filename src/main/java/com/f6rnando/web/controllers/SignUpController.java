@@ -16,11 +16,14 @@ import com.f6rnando.web.domain.frontend.ProAccountPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +40,7 @@ import java.util.*;
  *************************************/
 
 @Controller
+@PropertySource("file:///${user.home}/.f6rnando-devops/application-common.properties")
 public class SignUpController {
 
     /*      FIELDS      */
@@ -48,7 +52,7 @@ public class SignUpController {
 
     public static final String PAYLOAD_MODEL_KEY_NAME = "payload";
 
-    public static final String SUBSCRIPTION_VIEW_NAME = "registration/signup";
+    public static final String SUBSCRIPTION_VIEW_NAME = "registration/signUp";
 
     public static final String DUPLICATED_USERNAME = "duplicatedUsername";
 
@@ -70,6 +74,12 @@ public class SignUpController {
     @Autowired
     private S3Service s3Service;
 
+    @Value("${creditcard.year.from}")
+    private int creditCardYearStart;
+
+    @Value("${creditcard.year.to}")
+    private int creditCardYearFinish;
+
     /*      METHODS      */
 
     @RequestMapping(value = SIGNUP_URL_MAPPING, method = RequestMethod.GET)
@@ -84,6 +94,8 @@ public class SignUpController {
 
         model.addAttribute(PAYLOAD_MODEL_KEY_NAME, new ProAccountPayload());
         model.addAttribute("countryMap", countryMap);
+        model.addAttribute("creditCardYearStart", creditCardYearStart);
+        model.addAttribute("creditCardYearFinish", creditCardYearFinish);
 
         return SUBSCRIPTION_VIEW_NAME;
     }
@@ -96,6 +108,10 @@ public class SignUpController {
         // Sorting the Map
         Map<String, String> countryMap = new TreeMap<>(countriesConfig.getKey());
         model.addAttribute("countryMap", countryMap);
+
+        // Credit card years
+        model.addAttribute("creditCardYearStart", creditCardYearStart);
+        model.addAttribute("creditCardYearFinish", creditCardYearFinish);
 
         if (planID != PlansEnum.BASIC.getId() && planID != PlansEnum.PRO.getId()) {
             model.addAttribute(SIGNED_UP_MESSAGE, "false");
@@ -155,7 +171,19 @@ public class SignUpController {
                         registeredUser = userService.createUser(user, PlansEnum.BASIC, roles);
                     } else {
                         roles.add(new UserRole(user, new Role(RolesEnum.PRO)));
+
+                        // Extra precaution in case the POST method is invoked programmatically
+                        if (StringUtils.isEmpty(payload.getCardCode()) || StringUtils.isEmpty(payload.getCardNumber())
+                                || StringUtils.isEmpty(payload.getCardMonth()) || StringUtils.isEmpty(payload.getCardYear())) {
+                            logger.error("One or more credit card fields is null or empty. Returning error to the user");
+                            model.addAttribute(SIGNED_UP_MESSAGE, "false");
+                            model.addAttribute(ERROR_MESSAGE, "One of more credit card details are null or empty.");
+
+                            return SUBSCRIPTION_VIEW_NAME;
+                        }
+
                         registeredUser = userService.createUser(user, PlansEnum.PRO, roles);
+                        logger.debug(payload.toString());
                     }
 
                     // Auto-login the registered user
@@ -188,4 +216,6 @@ public class SignUpController {
             model.addAttribute(DUPLICATED_EMAIL, true);
         }
     }
+
+
 }
